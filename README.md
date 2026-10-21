@@ -1,10 +1,8 @@
-# The-Black-Dog.github.io
-Digital Skills Hub Student Practice Website
-
 # ConnectUS Digital Skills Practice Site (Prototype)
 
 A safe place for ConnectUS Digital Skills Hub (DSH) learners to practice everyday online tasks: filling out forms, searching a website, typing, and using a mouse or Chromebook trackpad. Nothing a learner types or clicks is saved or sent.
 
+**Live prototype:** https://the-black-dog.github.io/
 **Status:** Prototype for user testing. Not the final production site.
 
 ## What's included
@@ -26,40 +24,60 @@ A safe place for ConnectUS Digital Skills Hub (DSH) learners to practice everyda
 - Every activity has a "Show me how" demo, multiple levels, and a keyboard path. Dragging activities also offer "click to pick up, click to place."
 - Written for Chromebook trackpads first, with mouse tips as a backup.
 
-## Privacy
-
-- No accounts, cookies, or browser storage. Progress and settings reset when the page is closed or reloaded.
-- Forms never submit anywhere, and typed or pasted text is never logged.
-- The page loads the Poppins font from Google Fonts, and GitHub Pages keeps standard server logs. Self-hosting the font is planned before production.
-- The page asks search engines not to index it (`noindex`) during testing.
-
-## Accessibility
-
-Built to WCAG 2.2 Level AA: semantic HTML, full keyboard support, visible focus, screen reader announcements, reduced-motion support, and 44×44 px touch targets.
+Link to a section by adding it to the end of the address, for example `https://the-black-dog.github.io/#typing` or `https://the-black-dog.github.io/#mouse/sort`.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | The whole site in one self-contained file (styles, scripts, and the learner photo are embedded) |
-| `README.md` | This file |
+| `index.html` | The whole site in one self-contained file (styles, scripts, fonts, and the learner photo are embedded) |
+| `404.html` | Friendly "page not found" page with a link back home |
+| `og-image.png` | Preview image shown when the link is shared in texts, email, or social media |
+| `apple-touch-icon.png` | Icon used when the site is saved to a phone or tablet home screen |
+| `robots.txt` | Asks search engines not to crawl the site during testing |
+| `.nojekyll` | Tells GitHub Pages to serve the files as-is instead of building them with Jekyll |
+| `tools/update_csp_hashes.py` | Keeps the security policy in sync after editing scripts (see below) |
+| `LICENSE` | MIT license for the source code |
+| `licenses/Poppins-OFL.txt` | License for the Poppins font |
 
-The single-file format matches how the prototype is hosted on claude.ai. A modular source structure with a small build step is planned (see Roadmap).
+## Privacy
+
+- No accounts, cookies, or browser storage. Progress and settings reset when the page is closed or reloaded.
+- Forms never submit anywhere, and typed or pasted text is never logged.
+- The page makes no requests to outside services: fonts and images are built into the page.
+- GitHub Pages keeps standard server logs (such as visitors' IP addresses), as most web hosts do.
+- The page asks search engines not to index it (`noindex` and `robots.txt`) during testing.
+
+## Security
+
+`index.html` includes a Content-Security-Policy that blocks the page from loading anything from other sites, sending data anywhere, or submitting forms. Its scripts are allowed by exact fingerprints (hashes).
+
+**Important:** after editing anything inside a `<script>` block in `index.html`, run this from the repository folder before committing:
+
+```
+python3 tools/update_csp_hashes.py
+```
+
+Otherwise the browser blocks the edited script and the page's buttons stop working. The browser's developer console shows a Content-Security-Policy error if this happens.
+
+## Accessibility
+
+Built to WCAG 2.2 Level AA: semantic HTML, full keyboard support, visible focus, screen reader announcements, reduced-motion support, and 44×44 px touch targets.
 
 ## Run it locally
 
 Open `index.html` in a browser, or use a local server such as the VS Code Live Server extension.
 
-## Deploy to GitHub Pages
+## Updating the live site
 
-1. Create a repository (for example `connectus-practice-site`) and upload `index.html` and `README.md` to the main branch.
-2. Go to **Settings › Pages**.
-3. Under **Build and deployment**, set **Source** to **Deploy from a branch**, choose **main** and **/ (root)**, and save.
-4. After a few minutes the site is live at `https://<account-name>.github.io/<repository-name>/`.
+This repository is named after the account (`<account-name>.github.io`), so GitHub Pages serves it at the root address.
 
-To update the site, upload a new `index.html` to the main branch. GitHub Pages republishes automatically.
+1. Upload changed files to the `main` branch (keep `index.html` at the top level, not in a folder).
+2. GitHub Pages republishes automatically. Watch the **Actions** tab for a green check, then reload with Ctrl + Shift + R.
 
-Links to specific sections work by adding the section to the end of the URL, for example `.../#typing` or `.../#mouse/sort`.
+Pages settings: **Settings › Pages › Build and deployment**, Source **Deploy from a branch**, branch **main**, folder **/ (root)**.
+
+If the site moves to a custom domain, update the `og:url` and `og:image` addresses near the top of `index.html`.
 
 ## Giving feedback
 
@@ -70,9 +88,13 @@ Testers can share feedback with the ConnectUS program team. Helpful details: whi
 - Test with DSH learners on program Chromebooks.
 - Add real-life challenges (sign-up, job application, and similar pages).
 - Refactor into modular source files with a build step, automated tests (end-to-end and accessibility), and linting.
-- Self-host fonts and add a Content-Security-Policy.
+- Add a plain-language privacy note on the site.
 - Launch on the ConnectUS WordPress site, then add touch versions for iPads.
 
-## Credits
+## License and credits
 
-Smart Columbus / ConnectUS Digital Skills Hub. Prototype built with Claude, based on designs from the ConnectUS design team. Learner photo used with permission (confirm media release before public launch).
+- Source code: MIT License (see `LICENSE`).
+- Poppins font: SIL Open Font License 1.1 (see `licenses/Poppins-OFL.txt`).
+- The learner photograph and the ConnectUS and Smart Columbus names and branding are not covered by the MIT License. Confirm the photo's media release before public launch.
+
+Smart Columbus / ConnectUS Digital Skills Hub. Prototype built with Claude, based on designs from the ConnectUS design team.
